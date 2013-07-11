@@ -19,6 +19,7 @@ var y = d3.scale.linear()
     .range([height, 0]);
  
 var line = d3.svg.line()
+    .interpolate("basis")   
     .x(function(d, i) { return x(i); })
     .y(function(d, i) { return y(d); });
 
@@ -68,7 +69,7 @@ var path = svg.append("g")
       .transition()
       .duration(500)
       .ease("linear")
-      .attr("transform", "translate(" + x(-1) + ")")
+      .attr("transform", "translate(" + x(0) + ")")
       .each("end", false);
    path
       .transition()
