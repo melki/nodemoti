@@ -1,0 +1,42 @@
+!!! 5
+html(lang='en')
+head
+    meta(charset='utf-8')
+    title Project_moti | #{title}	
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name='description', content='')
+    meta(name='author', content='@melki')
+    link(rel='stylesheet', href='/lib/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/custom.css')
+    script(src='http://code.jquery.com/jquery-1.10.1.min.js')
+    script(src='/lib/bootstrap/js/bootstrap.min.js')
+    script(src='/socket.io/socket.io.js')
+    script(src='http://d3js.org/d3.v3.min.js')
+
+
+  body
+    .container-narrow
+      .masthead
+        ul.nav.nav-pills.pull-right
+          - if(title=='home')
+            li.active
+              a(href='home') Home
+          -else
+            li  
+              a(href='home') Home
+          - if(title=='data')
+            li.active
+              a(href='data') Data
+          -else
+            li  
+              a(href='data') Data
+          - if(title=='graphs')
+            li.active
+              a(href='graphs') Graphs
+          -else
+            li  
+              a(href='graphs') Graphs
+          
+        h3.muted Project_moti
+      hr
+      block content

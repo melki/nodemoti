@@ -1,0 +1,36 @@
+extends layout
+
+block content  	
+    .jumbotron
+      
+      table.table.table-hover
+        h2 Read all the data in a fuckin table !
+          thead
+            tr
+              th #
+              th Accelerometer
+              th Gyro
+              th #
+          tbody
+            tr
+              td X
+              td(id="x") ...
+              td(id="yaw") ...
+              td YAW
+            tr
+              td Y
+              td(id="y") ...
+              td(id="pitch") ...
+              td PITCH
+            tr
+              td Z
+              td(id="z") ...
+              td(id="roll") ...
+              td ROLL
+              
+    hr
+    script(src='/js/data.js')  
+    .footer
+      p © Project_moti 2013
+
+      
