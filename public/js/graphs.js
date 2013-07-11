@@ -1,6 +1,6 @@
 var socket = io.connect('http://localhost:8080');
 var last_data=0;
-var color =d3.scale.category20b(); 
+var color = d3.scale.linear().domain([1,5]).range(['red', 'green'])
 
 var n = 1000,
     random = d3.random.normal(250, 0),
@@ -43,22 +43,23 @@ svg.append("g")
 svg.append("g")
     .attr("class", "y axis")
     .call(d3.svg.axis().scale(y).orient("left"));
- 
+
+
 var path = svg.append("g")
     .attr("clip-path", "url(#clip)")
     .append("path")
     .data([data])
     .attr("class", "line")
     .attr("d", line)
-    .style("stroke","blue");
+    .style("stroke","green");
  
   socket.on('serialEvent', function (socket_data)
    {
     socket_data = JSON.parse(socket_data.value.replace(/ /g,""));
     // push a new data point onto the back
     data.push(socket_data.accel.z);
-    z = document.getElementById("z");
-    z.innerHTML = data.accel.z;
+    var z = document.getElementById("z");
+    z.innerHTML = socket_data.accel.z;
    
   // redraw the line, and slide it to the left
   path
@@ -69,7 +70,10 @@ var path = svg.append("g")
       .ease("linear")
       .attr("transform", "translate(" + x(-1) + ")")
       .each("end", false);
-      
+   path
+      .transition()
+      .style("stroke",color(Math.abs(Math.floor((socket_data.accel.z+300)/110))))
+      .each("end", false);
  
   // pop the old data point off the front
   data.shift();
