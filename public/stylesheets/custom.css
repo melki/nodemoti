@@ -8,11 +8,21 @@
         margin: 0 auto;
         max-width: 900px;
       }
+      #area
+      {
+        width: 900px;
+        height: 500px;
+      }
       .container-narrow > hr {
         margin: 30px 0;
       }
 
       /* Main marketing message and sign up button */
+      .par {
+         background: #222;
+         color:white;
+       
+       } 
       .jumbotron {
         margin: 60px 0;
         text-align: center;
@@ -46,4 +56,9 @@
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
+}
+
+circle {
+  fill: none;
+  stroke-width: 1.5px;
 }

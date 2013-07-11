@@ -40,6 +40,7 @@ app.get('/', routes.index);
 app.get('/home', routes.index);
 app.get('/graphs', routes.graphs);
 app.get('/data', routes.data);
+app.get('/particles', routes.particles);
 
 
 var server = http.createServer(app).listen(app.get('port'), function(){

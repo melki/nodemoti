@@ -36,6 +36,12 @@ head
           -else
             li  
               a(href='graphs') Graphs
+          - if(title=='particles')
+            li.active
+              a(href='particles') Particles
+          -else
+            li  
+              a(href='particles') Particles
           
         h3.muted Project_moti
       hr

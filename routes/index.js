@@ -13,3 +13,7 @@ exports.graphs = function(req, res){
   res.render('graphs', { title: 'graphs' });
 };
 
+exports.particles = function(req, res){
+  res.render('particles', { title: 'particles' });
+};
+
