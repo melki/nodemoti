@@ -1,6 +1,6 @@
 var socket = io.connect('http://localhost:8080');
 var last_data=0;
-var color = d3.scale.linear().domain([1,5]).range(['red', 'green'])
+var color = d3.scale.linear().domain([1,3]).range(['red', 'green'])
 
 var n = 1000,
     random = d3.random.normal(250, 0),
@@ -73,7 +73,7 @@ var path = svg.append("g")
       .each("end", false);
    path
       .transition()
-      .style("stroke",color(Math.abs(Math.floor((socket_data.accel.z+300)/110))))
+      .style("stroke",color(Math.floor((socket_data.accel.z+20)/80)))
       .each("end", false);
  
   // pop the old data point off the front
