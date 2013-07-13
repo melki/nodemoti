@@ -30,7 +30,7 @@ serialport.list(function (err, ports) {
 		if(port.manufacturer.indexOf("Arduino") != -1){
 				myPort = new SerialPort(port.comName,{
 				baudrate: 115200,
-				parser: serialport.parsers.readline(";")	
+				parser: serialport.parsers.readline("\r\n")	
 			});
 		}
 	});
