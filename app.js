@@ -1,3 +1,4 @@
+
 /**
  * Module dependencies.
  */
@@ -23,18 +24,12 @@ app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
-var myPort;
-
-serialport.list(function (err, ports) {
-	ports.forEach(function(port) {
-		if(port.manufacturer.indexOf("Arduino") != -1){
-				myPort = new SerialPort(port.comName,{
-				baudrate: 115200,
-				parser: serialport.parsers.readline("\r\n")	
-			});
-		}
-	});
+var myPort = new SerialPort("/dev/ttyACM0", { 
+	// look for return and newline at the end of each data packet:
+	baudrate: 115200,
+	parser: serialport.parsers.readline("\r\n")
 });
+  
 
 // development only
 if ('development' == app.get('env')) {
