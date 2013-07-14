@@ -11,7 +11,7 @@ head
     script(src='http://code.jquery.com/jquery-1.10.1.min.js')
     script(src='/lib/bootstrap/js/bootstrap.min.js')
     script(src='/socket.io/socket.io.js')
-    script(src='http://d3js.org/d3.v3.min.js')
+    script(src='/js/d3.v3.min.js')
 
 
   body
@@ -42,6 +42,12 @@ head
           -else
             li  
               a(href='particles') Particles
+          - if(title=='d3js')
+            li.active
+              a(href='d3js') D3.js
+          -else
+            li  
+              a(href='d3js') D3.js
           
         h3.muted Project_moti
       hr

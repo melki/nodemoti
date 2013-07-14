@@ -41,6 +41,7 @@ app.get('/home', routes.index);
 app.get('/graphs', routes.graphs);
 app.get('/data', routes.data);
 app.get('/particles', routes.particles);
+app.get('/d3js', routes.d3js);
 
 
 var server = http.createServer(app).listen(app.get('port'), function(){

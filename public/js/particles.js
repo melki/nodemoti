@@ -1,9 +1,9 @@
 var socket = io.connect('http://localhost:8080');
 var w = 900,
     h = 500,
-    z = d3.scale.category20c(),
+    z = d3.scale.category10(),
     i = 0;
-var a =0,b=0,c=0,d=0;
+var a =0,b=0,c=0,d=0,e=0,f=0;
 var svg = d3.select("div#area").append("svg:svg")
     .attr("width", w)
     .attr("height", h)
@@ -17,6 +17,10 @@ var svg = d3.select("div#area").append("svg:svg")
     a = socket_data.accel.y*1.5+450;
     c = (a+c)/2;
     d = (b+d)/2;
+    e = 2*(a+c)/3;
+    f = 2*(b+d)/3;
+  
+ 
 
   svg.append("svg:circle")
       .attr("cx", c)

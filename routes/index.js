@@ -17,3 +17,7 @@ exports.particles = function(req, res){
   res.render('particles', { title: 'particles' });
 };
 
+exports.d3js = function(req, res){
+  res.render('d3js', { title: 'd3js' });
+};
+
