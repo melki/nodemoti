@@ -12,6 +12,7 @@
     "serialport": "latest",
     "socket.io": "latest",
     "socket.io-parser": "latest",
-    "socket.io-client": "LearnBoost/socket.io-client"
+    "socket.io-client": "LearnBoost/socket.io-client",
+    "mongoose": ">=2.7.0"
   }
 }

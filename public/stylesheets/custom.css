@@ -2,7 +2,10 @@
         padding-top: 20px;
         padding-bottom: 40px;
       }
-
+      a
+      {
+        cursor:pointer;
+      }
       /* Custom container */
       .container-narrow {
         margin: 0 auto;

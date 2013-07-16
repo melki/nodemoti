@@ -129,7 +129,18 @@ for (var j = 0; j < 2; j++) {
       }
        })
       .each("end",false);
-      
+
+   // var newData = new motiModel({ x : socket_data.accel.x});
+   // newData.name = "test";
+   // newData.y = socket_data.accel.y;
+   // newData.z = socket_data.accel.z;
+   // newData.pitch = socket_data.gyro.pitch;
+   // newData.yaw = socket_data.gyro.yaw;
+   // newData.roll = socket_data.gyro.roll;
+   // newData.save(function (err) {
+   // if (err) { throw err; }
+   // console.log('data ajouté avec succès !');
+   //   });
    
   // pop the old data point off the front
   for (var i = 0; i < nbGraphs; i++) 
