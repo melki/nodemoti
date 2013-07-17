@@ -52,10 +52,15 @@
 
       .line {
         fill: none;
-        stroke-width: 1px;
       }
-      
+ path {
+  fill: none;
+  stroke : #e94366;
+  stroke-width: 1px;
+}
+
 .axis path, .axis line {
+  stroke-width: 1px;
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
@@ -64,4 +69,11 @@
 circle {
   fill: none;
   stroke-width: 1.5px;
+}
+
+
+.brush .extent {
+  stroke: #fff;
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
 }

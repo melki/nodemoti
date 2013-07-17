@@ -1,4 +1,4 @@
-
+var color = ["#b0d02e", "#e94366", "#51a5cb","#f08f33","#333333","#777777"];
                                  
 var margin = {top: 10, right: 10, bottom: 100, left: 40},
     margin2 = {top: 430, right: 10, bottom: 20, left: 40},
@@ -6,7 +6,7 @@ var margin = {top: 10, right: 10, bottom: 100, left: 40},
     height = 500 - margin.top - margin.bottom,
     height2 = 500 - margin2.top - margin2.bottom;
 
-var parseDate = d3.time.format("%b %Y").parse;
+var parseDate = d3.time.format("%Y-%m-%dT%H:%M:%S.%LZ").parse;
 
 var x = d3.time.scale().range([0, width]),
     x2 = d3.time.scale().range([0, width]),
@@ -33,7 +33,7 @@ var area2 = d3.svg.area()
     .y0(height2)
     .y1(function(d) { return y2(d.x); });
 
-var svg = d3.select("graph").append("svg")
+var svg = d3.select("graphs").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom);
 
@@ -55,14 +55,17 @@ var context = svg.append("g")
 d3.json("../data.json", function(error, data) {
     
     data.forEach(function(d) {
+    
     d.date = parseDate(d.date);
     d.x = +d.x;
+    d.z = +d.z;
+    d.y = +d.y;
   });
 
   x.domain(d3.extent(data.map(function(d) { return d.date; })));
-  y.domain([0, d3.max(data.map(function(d) { return d.x; }))]);
+  y.domain([-600,600]);
   x2.domain(x.domain());
-  y2.domain(y.domain());
+  y2.domain([-500,500]);
 
   focus.append("path")
       .datum(data)

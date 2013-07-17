@@ -16,4 +16,4 @@ var nbSessions = new mongoose.Schema({
  });
 mongoose.model( 'nbSessions', nbSessions );
 
-mongoose.connect( 'mongodb://localhost/test3' );
+mongoose.connect( 'mongodb://localhost/test6' );

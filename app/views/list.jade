@@ -3,41 +3,16 @@ extends layout
 block content
     .jumbotron
       h2 Really big data !
-      - if(list==0)    
-        graph
-        table.table.table-hover
-          thead
-            tr
-              th Date
-              th X
-              th Y
-              th Z
-              th Pitch
-              th Yaw
-              th Roll
-          tbody  
-          each item in moti
-             - if(list==0)    
-              tr
-                - item.date=item.date.replace(/ /g,"-")
-                - item.date=item.date.split("-")
-                - alert(item.date);
-                - item.date=item.date.[1]
-                td=item.date
-                td=item.x
-                td=item.y
-                td=item.z
-                td=item.pitch
-                td=item.yaw
-                td=item.roll
-              
-      each item in moti
-        - if(b!=item.session && list==1) 
-          li 
-            a(href='list/'+item.session) Session # #{item.session}
+      -if(list==0)
+        graphs
+      -if(list==1)
+        each item in moti
+          - if(b!=item.session) 
+              li 
+                a(href='list/'+item.session) Session # #{item.session}
             - b = item.session;
       
-    hr
+      hr
 
       
     .footer

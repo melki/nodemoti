@@ -52,9 +52,8 @@ exports.session = function ( req, res){
  
       res.render( 'list', {
           title : 'list',
-          moti : moti,
-          list : 0,
-          b : -1
+          list :0
+        
       });
     });
 };
