@@ -11,6 +11,7 @@ var moti = new mongoose.Schema({
  roll: Number,
 });
 mongoose.model( 'moti', moti );
+
 var nbSessions = new mongoose.Schema({
  date : { type : Date, default : Date.now },
  });

@@ -18,6 +18,7 @@ head
     .container-narrow
       .masthead
         ul.nav.nav-pills.pull-right
+            
           - if(title=='home')
             li.active
               a(href='/home') Home
@@ -54,7 +55,9 @@ head
           -else
             li  
               a(href='/list') list
-          
+          li
+            a(onclick="on_off();", id="on_off", class="red") Off 
         h3.muted Project_moti
       hr
       block content
+    script(src='/js/on_off.js')y

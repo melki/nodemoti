@@ -6,7 +6,7 @@ var mongoose = require( 'mongoose' );
 var motiModel  =  mongoose.model( 'moti' );
 var url = require("url");
 var fs = require('fs');
-
+var month, day, hour, min, date,moti;
 
 exports.index = function(req, res){
   res.render('index', { title: 'home' });
@@ -27,7 +27,7 @@ exports.d3js = function(req, res){
 };
 
 exports.list = function ( req, res ){
-  motiModel.find( function ( err, moti, count ){
+  motiModel.find().sort({session: 1}).distinct('session', function ( err, moti ){
     res.render( 'list', {
         title : 'list',
         list : 1,
@@ -38,22 +38,31 @@ exports.list = function ( req, res ){
 };
 
 exports.session = function ( req, res){
-  var test = url.parse(req.url).pathname.split('/');
+  var  test = url.parse(req.url).pathname.split('/');
   test = test[test.length-1];
   console.log(test);
    motiModel.
     find({ session : test }).
     exec( function ( err, moti, count ){
       if( err ) { throw(err); };
+    motiti = moti;  
   fs.writeFile('./public/data.json', JSON.stringify(moti), function (err) {
   if (err) throw err;
   console.log('The json is saved!');
-	});
+
+  
+  });
+           date = new Date(motiti[0].date);
+           month = date.getMonth();
+           day = date.getDate();
+           min = date.getMinutes();
+           hour = date.getHours();
  
       res.render( 'list', {
           title : 'list',
-          list :0
-        
+          list :0,
+          session : test,
+          date :  hour + ":" + min + " the " + day + "/" + month
       });
     });
 };

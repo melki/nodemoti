@@ -1,6 +1,7 @@
  body {
         padding-top: 20px;
         padding-bottom: 40px;
+        background: #fff;
       }
       a
       {
@@ -49,6 +50,12 @@
       svg {
        font: 10px Tahoma,sans-serif;
       }
+      .red
+      {
+        background-color: red;
+        color : white; 
+      }
+
 
       .line {
         fill: none;
@@ -62,7 +69,7 @@
 .axis path, .axis line {
   stroke-width: 1px;
   fill: none;
-  stroke: #000;
+  stroke: black;
   shape-rendering: crispEdges;
 }
 
@@ -77,3 +84,15 @@ circle {
   fill-opacity: .125;
   shape-rendering: crispEdges;
 }
+.path_x {
+    stroke:green;
+}
+.path_y {
+    stroke:red;
+}
+.path_z {
+    stroke:blue;
+}
+#x{ color:green;}
+#y{ color:red;}
+#z{ color:blue;}

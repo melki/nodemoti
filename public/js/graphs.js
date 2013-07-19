@@ -1,3 +1,4 @@
+function load() {
 var socket = io.connect('http://localhost:8080');
 var last_data=0;
 var color = ["#b0d02e", "#e94366", "#51a5cb","#f08f33","#333333","#777777"];
@@ -151,6 +152,8 @@ for (var j = 0; j < 2; j++) {
 };
     
     });
- 
+  } 
+
+window.addEventListener("load", load, true);
 
 
