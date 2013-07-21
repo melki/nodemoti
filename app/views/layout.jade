@@ -2,7 +2,7 @@
 html(lang='en')
 head
     meta(charset='utf-8')
-    title Project_moti | #{title}	
+    title Project_moti | #{title}
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     meta(name='description', content='')
     meta(name='author', content='@melki')
@@ -18,46 +18,46 @@ head
     .container-narrow
       .masthead
         ul.nav.nav-pills.pull-right
-            
+
           - if(title=='home')
             li.active
               a(href='/home') Home
           -else
-            li  
+            li
               a(href='/home') Home
           - if(title=='data')
             li.active
               a(href='/data') Data
           -else
-            li  
+            li
               a(href='/data') Data
           - if(title=='graphs')
             li.active
               a(href='/graphs') Graphs
           -else
-            li  
+            li
               a(href='/graphs') Graphs
           - if(title=='particles')
             li.active
               a(href='/particles') Particles
           -else
-            li  
+            li
               a(href='/particles') Particles
           - if(title=='d3js')
             li.active
               a(href='/d3js') D3.js
           -else
-            li  
+            li
               a(href='/d3js') D3.js
           - if(title=='list')
             li.active
               a(href='/list') list
           -else
-            li  
+            li
               a(href='/list') list
           li
-            a(onclick="on_off();", id="on_off", class="red") Off 
+            a(onclick="on_off();", id="on_off", class="red") Off
         h3.muted Project_moti
       hr
       block content
-    script(src='/js/on_off.js')y
+    script(src='/js/on_off.js')
