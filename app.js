@@ -3,7 +3,7 @@
  * Module dependencies.
  */
 
-var sessionActual, on_off="off";
+var sessionActual, setActual, on_off="off";
 var express = require('express')
   , routes = require('./app/controllers')
   , user = require('./app/controllers/user')
@@ -40,6 +40,7 @@ var mongoose = require( 'mongoose' );
 var motiModel = mongoose.model('moti');
 var nbSessionsModel = mongoose.model('nbSessions');
 var setDataModel = mongoose.model('setData');
+var setModel = mongoose.model('set');
 
 
 app.get('/', routes.index);
@@ -67,7 +68,16 @@ io.sockets.on('connection', function (socket) {
   
   socket.on('machine', function (data)
   {
-     var nbPoints=0;
+     var newSet = new setModel({});
+     newSet.save(function (err) {
+     if (err) { throw err; }
+      console.log('New set !');
+     });
+     
+     setModel.count( function (err, count) {
+     if (err) { throw err; }
+     setActual = count; 
+     console.log('Set #%d ', count);
      var theDate = new Date(data[0]);
      var theDate2 = new Date(data[1]);
      var action = data[2];
@@ -76,16 +86,20 @@ io.sockets.on('connection', function (socket) {
      theDate.setHours(theDate.getHours() + 2);
      theDate2.setHours(theDate2.getHours() + 2);
       
-     var newSet = new setDataModel({date1 : theDate});
-     newSet.date2 = theDate2;
-     newSet.action = action;
-     newSet.session = session;
-     newSet.save(function (err) {
+     var newDataSet = new setDataModel({date1 : theDate});
+     newDataSet.date2 = theDate2;
+     newDataSet.action = action;
+     newDataSet.session = session;
+     newDataSet.nbset = setActual;
+     newDataSet.save(function (err) {
        if (err) { throw err; }
-        console.log('dataset succesfully add ! '+ newSet);
+        console.log('dataset succesfully add ! '+ newDataSet);
         });
         
 
+     });
+
+     
 
           
     
