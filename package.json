@@ -1,5 +1,6 @@
 {
   "name": "NodeMoti",
+  "author": "Melchior de Toldi for WeAreLeka!(http://weareleka.com)",
   "version": "0.0.1",
   "private": true,
   "scripts": {
