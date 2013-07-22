@@ -3,19 +3,28 @@
         padding-bottom: 40px;
         background: #fff;
       }
-      a
+      a,.btn
       {
+        margin-left: 4px;
         cursor:pointer;
       }
       /* Custom container */
       .container-narrow {
         margin: 0 auto;
-        max-width: 900px;
+        max-width: 900px; 
+      }
+      .cases
+      {
+        float: right;
       }
       #area
       {
         width: 900px;
         height: 500px;
+      }
+      .bouton
+      {
+        float : left;
       }
       .container-narrow > hr {
         margin: 30px 0;
@@ -35,10 +44,7 @@
         font-size: 72px;
         line-height: 1;
       }
-      .jumbotron .btn {
-        font-size: 21px;
-        padding: 14px 24px;
-      }
+
 
       /* Supporting marketing content */
       .marketing {
@@ -91,6 +97,14 @@ circle {
     stroke:red;
 }
 .path_z {
+    stroke:blue;
+}.path_roll {
+    stroke:green;
+}
+.path_pitch {
+    stroke:red;
+}
+.path_yaw {
     stroke:blue;
 }
 #x{ color:green;}

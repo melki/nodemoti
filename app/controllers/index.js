@@ -8,6 +8,8 @@ var url = require("url");
 var fs = require('fs');
 var month, day, hour, min, date,moti;
 
+
+
 exports.index = function(req, res){
   res.render('index', { title: 'home' });
 };
@@ -27,13 +29,15 @@ exports.d3js = function(req, res){
 };
 
 exports.list = function ( req, res ){
-  motiModel.find().sort({session: 1}).distinct('session', function ( err, moti ){
+  motiModel.find().distinct('session', function ( err, result ){
+    moti = result.sort(function(a,b){return a-b});;
+    
+    });
     res.render( 'list', {
         title : 'list',
         list : 1,
         b : -1,
         moti : moti
-    });
   });
 };
 
@@ -46,7 +50,7 @@ exports.session = function ( req, res){
     exec( function ( err, moti, count ){
       if( err ) { throw(err); };
     motiti = moti;  
-  fs.writeFile('./public/data.json', JSON.stringify(moti), function (err) {
+  fs.writeFile('./public/tmp/data.json', JSON.stringify(moti), function (err) {
   if (err) throw err;
   console.log('The json is saved!');
 

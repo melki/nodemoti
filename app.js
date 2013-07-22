@@ -26,15 +26,20 @@ app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+ 
 var myPort = new SerialPort("/dev/ttyACM0", { 
   // look for return and newline at the end of each data packet:
   baudrate: 115200,
   parser: serialport.parsers.readline("\r\n")
 });
+
+
   
 var mongoose = require( 'mongoose' );
 var motiModel = mongoose.model('moti');
 var nbSessionsModel = mongoose.model('nbSessions');
+var setDataModel = mongoose.model('setData');
 
 
 app.get('/', routes.index);
@@ -59,13 +64,42 @@ io.sockets.on('connection', function (socket) {
 
   socket.emit("on_offInfo", on_off );
   // if there's a socket client, listen for new serial data:  
+  
+  socket.on('machine', function (data)
+  {
+     var nbPoints=0;
+     var theDate = new Date(data[0]);
+     var theDate2 = new Date(data[1]);
+     var action = data[2];
+     
+     var session = data[3];
+     theDate.setHours(theDate.getHours() + 2);
+     theDate2.setHours(theDate2.getHours() + 2);
+      
+     var newSet = new setDataModel({date1 : theDate});
+     newSet.date2 = theDate2;
+     newSet.action = action;
+     newSet.session = session;
+     newSet.save(function (err) {
+       if (err) { throw err; }
+        console.log('dataset succesfully add ! '+ newSet);
+        });
+        
+
+
+          
+    
+    
+  });
+
+
   socket.on('delete', function (data)
   {
     motiModel.remove({ session: data }, function (err) {
-  if (err) return handleError(err);
-  console.log('Session #'+data+' deleted');
-  // removed!
-});
+    if (err) return handleError(err);
+    console.log('Session #'+data+' deleted');
+    // removed!
+    });
   });
 
 

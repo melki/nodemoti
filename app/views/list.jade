@@ -1,25 +1,50 @@
 extends layout
 
 block content
-    .jumbotron
+  .jumbotron
       -if(list==0)
-        h2 Session ##{session} at #{date} 
+        h2 Session # 
+          span#session #{session}
+        at #{date} 
           a(href="/list",onclick="deleteSession(#{session})")
             i.icon-trash
-
-        span#x  X  -     
-        input(type='checkbox', id='X', checked, onchange="addChart()")
-        span#y  Y  -    
-        input(type='checkbox', id='Y', checked, onchange="addChart()")
-        span#z  Z  -     
-        input(type='checkbox', id='Z', checked, onchange="addChart()")
+        .bouton
+          p.btn.btn-small.btn-success(href='', id="acc") Accelerometer      
+          p.btn.btn-small.btn-info(href='', id="gyro") Gyroscope
+           
+        .cases  
+          span#x  X  -     
+          input(type='checkbox', id='X', checked, onchange="addChart()")
+          span#y  Y  -    
+          input(type='checkbox', id='Y', checked, onchange="addChart()")
+          span#z  Z  -     
+          input(type='checkbox', id='Z', checked, onchange="addChart()")
         graphs#graphs
+        .bfh-selectbox
+            input(type='hidden', name='selectbox3', value='')
+            a.bfh-selectbox-toggle(role='button', data-toggle='bfh-selectbox', href='#')
+              span.bfh-selectbox-option.input-medium(data-option='1',  id="action") Up
+              b.caret
+            .bfh-selectbox-options
+              input.bfh-selectbox-filter(type='text')
+              div(role='listbox')
+                ul(role='option')
+                  li
+                    a(tabindex='-1', href='#', data-option='1') Up
+                  li
+                    a(tabindex='-1', href='#', data-option='2') Lift
+        br
+        p.btn.btn-success(id="send") Send      
 
-      -if(list==1)
-        h2 Really big data !
-        each item in moti
-          li 
-            a(href='list/'+item) Session ##{item}
+                  
+    
+
+
+    -if(list==1)
+      h2 Really big data !
+      each item in moti
+        li 
+          a(href='list/'+item) Session ##{item}
             
       
       hr
