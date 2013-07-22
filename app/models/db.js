@@ -17,4 +17,12 @@ var nbSessions = new mongoose.Schema({
  });
 mongoose.model( 'nbSessions', nbSessions );
 
+var setData = new mongoose.Schema({
+ action : { type : String,  required: true },
+ date1 : { type : Date,  required: true },
+ date2 : { type : Date,  required: true },
+ session : { type : Number,  required: true }
+ });
+mongoose.model( 'setData', setData );
+
 mongoose.connect( 'mongodb://localhost/test6' );

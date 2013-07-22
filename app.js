@@ -39,6 +39,7 @@ var myPort = new SerialPort("/dev/ttyACM0", {
 var mongoose = require( 'mongoose' );
 var motiModel = mongoose.model('moti');
 var nbSessionsModel = mongoose.model('nbSessions');
+var setDataModel = mongoose.model('setData');
 
 
 app.get('/', routes.index);
@@ -69,17 +70,24 @@ io.sockets.on('connection', function (socket) {
      var nbPoints=0;
      var theDate = new Date(data[0]);
      var theDate2 = new Date(data[1]);
+     var action = data[2];
+     
+     var session = data[3];
      theDate.setHours(theDate.getHours() + 2);
      theDate2.setHours(theDate2.getHours() + 2);
       
+     var newSet = new setDataModel({date1 : theDate});
+     newSet.date2 = theDate2;
+     newSet.action = action;
+     newSet.session = session;
+     newSet.save(function (err) {
+       if (err) { throw err; }
+        console.log('dataset succesfully add ! '+ newSet);
+        });
+        
 
 
-    motiModel.find({date : {$gte: theDate, $lte: theDate2}}).count(function ( err ,count)
-
-      {   
-        console.log(count+" points")
-      });
-          // theDate.setSeconds(theDate.getSeconds() + 1);
+          
     
     
   });

@@ -3,7 +3,9 @@ extends layout
 block content
   .jumbotron
       -if(list==0)
-        h2 Session ##{session} at #{date} 
+        h2 Session # 
+          span#session #{session}
+        at #{date} 
           a(href="/list",onclick="deleteSession(#{session})")
             i.icon-trash
         .bouton
@@ -21,10 +23,10 @@ block content
         .bfh-selectbox
             input(type='hidden', name='selectbox3', value='')
             a.bfh-selectbox-toggle(role='button', data-toggle='bfh-selectbox', href='#')
-              span.bfh-selectbox-option.input-medium(data-option='1') Up
+              span.bfh-selectbox-option.input-medium(data-option='1',  id="action") Up
               b.caret
             .bfh-selectbox-options
-              input.bfh-selectbox-filter(type='text',id="action")
+              input.bfh-selectbox-filter(type='text')
               div(role='listbox')
                 ul(role='option')
                   li

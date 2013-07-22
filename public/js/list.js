@@ -1,5 +1,5 @@
 var socket = io.connect();
-var whatTheUserWant = ['x', 'y', 'z'], points=1;
+var whatTheUserWant = ['x', 'y', 'z'], points=0;
 $(document).ready(function() {
     $("#acc").click(function() {
         whatTheUserWant = ['x', 'y', 'z'];
@@ -20,10 +20,16 @@ $(document).ready(function() {
         for (var i = 0; i < 3; i++) { check[i].checked = true;}
     });
     $("#send").click(function(){
-      var data = new Array();
-      
-      socket.emit('machine',points);
-      
+      if(points!=0)
+      {
+        var data = new Array();
+        data[0]=points[0];
+        data[1]=points[1];
+        data[2]= $("#action").html();
+        data[3]=$("#session").html();
+        socket.emit('machine',data);
+        points=0;
+       } 
     }); 
 });
 var scale = 600;
