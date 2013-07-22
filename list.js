@@ -10,7 +10,7 @@ var serialport = require("serialport"),       // include the serialport library
 
 serialport.list(function (err, ports) {
 	ports.forEach(function(port) {
-		if(port.pnpId.indexOf("Arduino") != -1 || port.manufacturer.indexOf("Arduino") != -1){
+		if(port.pnpId.indexOf("duino") != -1 || port.manufacturer.indexOf("duino") != -1){
 				myPort = new SerialPort(port.comName,{
 				baudrate: 115200,
 				parser: serialport.parsers.readline("\r\n"),
