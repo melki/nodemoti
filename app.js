@@ -74,7 +74,7 @@ io.sockets.on('connection', function (socket) {
       console.log('New set !');
      });
      
-     setModel.count( function (err, count) {
+    setModel.count( function (err, count) {
      if (err) { throw err; }
      setActual = count; 
      console.log('Set #%d ', count);
@@ -82,20 +82,34 @@ io.sockets.on('connection', function (socket) {
      var theDate2 = new Date(data[1]);
      var action = data[2];
      
-     var session = data[3];
+     var dataSet;
      theDate.setHours(theDate.getHours() + 2);
      theDate2.setHours(theDate2.getHours() + 2);
-      
-     var newDataSet = new setDataModel({date1 : theDate});
-     newDataSet.date2 = theDate2;
-     newDataSet.action = action;
-     newDataSet.session = session;
-     newDataSet.nbset = setActual;
-     newDataSet.save(function (err) {
-       if (err) { throw err; }
-        console.log('dataset succesfully add ! '+ newDataSet);
+     
+     motiModel.find({date : {$gte: theDate, $lte: theDate2}}).exec  (function ( err ,result)
+
+      {   
+        dataSet = result;
+      for (var j = 0; j < dataSet.length; j++) {
+        var newDataSet = new setDataModel({idSet : setActual});
+        newDataSet.action = action;
+        newDataSet.x = dataSet[j].x;
+        newDataSet.y = dataSet[j].y;
+        newDataSet.z = dataSet[j].z;
+        newDataSet.pitch = dataSet[j].pitch;
+        newDataSet.yaw = dataSet[j].yaw;
+        newDataSet.roll = dataSet[j].roll;
+        newDataSet.save(function (err) {
+        if (err) { throw err; }
+        console.log('data succesfully add ! '+ newDataSet);
         });
         
+
+      };
+      });
+
+
+   
 
      });
 

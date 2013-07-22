@@ -24,10 +24,13 @@ mongoose.model( 'set', set );
 
 var setData = new mongoose.Schema({
  action : { type : String,  required: true },
- date1 : { type : Date,  required: true },
- date2 : { type : Date,  required: true },
- session : { type : Number,  required: true },
- nbset : { type : Number,  required: true }
+ x: Number,
+ y: Number,
+ z: Number,
+ yaw: Number,
+ pitch: Number,
+ roll: Number,
+ idSet : { type : Number,  required: true }
  });
 mongoose.model( 'setData', setData );
 
