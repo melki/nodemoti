@@ -50,7 +50,7 @@ exports.session = function ( req, res){
     exec( function ( err, moti, count ){
       if( err ) { throw(err); };
     motiti = moti;  
-  fs.writeFile('./public/data.json', JSON.stringify(moti), function (err) {
+  fs.writeFile('./public/tmp/data.json', JSON.stringify(moti), function (err) {
   if (err) throw err;
   console.log('The json is saved!');
 

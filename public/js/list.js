@@ -104,7 +104,7 @@ svg.append("defs").append("clipPath")
 var dd;
 
 
-d3.json("../data.json", function(error, data) {
+d3.json("../tmp/data.json", function(error, data) {
     dd=data;
     
     data.forEach(function(d) {
