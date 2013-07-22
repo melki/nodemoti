@@ -1,5 +1,4 @@
 
-
   var socket = io.connect();
   var on_offActual = "off";
   var link = document.getElementById('on_off');
@@ -47,3 +46,4 @@ function deleteSession (session)
 {
   socket.emit('delete', session);
 }
+

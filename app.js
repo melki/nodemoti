@@ -26,11 +26,15 @@ app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+ 
 var myPort = new SerialPort("/dev/ttyACM0", { 
   // look for return and newline at the end of each data packet:
   baudrate: 115200,
   parser: serialport.parsers.readline("\r\n")
 });
+
+
   
 var mongoose = require( 'mongoose' );
 var motiModel = mongoose.model('moti');
@@ -59,13 +63,35 @@ io.sockets.on('connection', function (socket) {
 
   socket.emit("on_offInfo", on_off );
   // if there's a socket client, listen for new serial data:  
+  
+  socket.on('machine', function (data)
+  {
+     var nbPoints=0;
+     var theDate = new Date(data[0]);
+     var theDate2 = new Date(data[1]);
+     theDate.setHours(theDate.getHours() + 2);
+     theDate2.setHours(theDate2.getHours() + 2);
+      
+
+
+    motiModel.find({date : {$gte: theDate, $lte: theDate2}}).count(function ( err ,count)
+
+      {   
+        console.log(count+" points")
+      });
+          // theDate.setSeconds(theDate.getSeconds() + 1);
+    
+    
+  });
+
+
   socket.on('delete', function (data)
   {
     motiModel.remove({ session: data }, function (err) {
-  if (err) return handleError(err);
-  console.log('Session #'+data+' deleted');
-  // removed!
-});
+    if (err) return handleError(err);
+    console.log('Session #'+data+' deleted');
+    // removed!
+    });
   });
 
 

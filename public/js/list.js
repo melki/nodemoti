@@ -1,7 +1,35 @@
+var socket = io.connect();
+var whatTheUserWant = ['x', 'y', 'z'], points=1;
+$(document).ready(function() {
+    $("#acc").click(function() {
+        whatTheUserWant = ['x', 'y', 'z'];
+        $('#x').text(" X - ");
+        $('#y').text(" Y - ");
+        $('#z').text(" Z - ");
+        scale = 600;
+        drawchart();
+        for (var i = 0; i < 3; i++) { check[i].checked = true;}
+    });
+     $("#gyro").click(function() {
+        whatTheUserWant = ['yaw', 'pitch', 'roll'];
+        $('#x').text(" Yaw - ");
+        $('#y').text(" Pitch - ");
+        $('#z').text(" Roll - "); 
+        scale = 180;
+        drawchart();
+        for (var i = 0; i < 3; i++) { check[i].checked = true;}
+    });
+    $("#send").click(function(){
+      var data = new Array();
+      
+      socket.emit('machine',points);
+      
+    }); 
+});
+var scale = 600;
+var focus, brush, context, color = ["green","red","blue  ","#b0d02e", "#e94366", "#51a5cb","#f08f33","#333333","#777777"];
 
-var whatTheUserWant = ['x', 'y', 'z'];
-var color = ["green","red","blue  ","#b0d02e", "#e94366", "#51a5cb","#f08f33","#333333","#777777"];
-                                 
+function drawchart(){                                 
 var margin = {top: 10, right: 10, bottom: 100, left: 40},
     margin2 = {top: 430, right: 10, bottom: 20, left: 40},
     width = 960 - margin.left - margin.right,
@@ -19,10 +47,9 @@ var xAxis = d3.svg.axis().scale(x).orient("bottom"),
     xAxis2 = d3.svg.axis().scale(x2).orient("bottom"),
     yAxis = d3.svg.axis().scale(y).orient("left");
 
-var brush = d3.svg.brush()
+ brush = d3.svg.brush()
     .x(x2)
     .on("brush", brush);
-
 
 
 var area = function (color) {
@@ -63,10 +90,10 @@ svg.append("defs").append("clipPath")
     .attr("width", width)
     .attr("height", height);
 
-var focus = svg.append("g")
+ focus = svg.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var context = svg.append("g")
+ context = svg.append("g")
     .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 var dd;
 
@@ -77,15 +104,18 @@ d3.json("../data.json", function(error, data) {
     data.forEach(function(d) {
     
     d.date = parseDate(d.date);
-    d.y = +d.y
+    d.y = +d.y;
     d.x = +d.x;
     d.z = +d.z;
+    d.yaw = +d.yaw;
+    d.pitch = +d.pitch;
+    d.roll = +d.roll;
   });
 
   x.domain(d3.extent(data.map(function(d) { return d.date; })));
-  y.domain([-600,600]);
+  y.domain([-scale,scale]);
   x2.domain(x.domain());
-  y2.domain([-500,500]);
+  y2.domain([-scale,scale]);
 
   focus.selectAll('path')
       .data(whatTheUserWant)
@@ -142,13 +172,15 @@ d3.json("../data.json", function(error, data) {
 });
 
  function brush() {
+        points = brush.extent();   
         x.domain(brush.empty() ? x2.domain() : brush.extent());
         focus.selectAll("path").attr("d", function (col) { return area(col)(dd); });
         focus.select(".x.axis").call(xAxis);
     }
 
-    
+   } 
 
+   drawchart();
   var check = new Array();
   check[0] = document.getElementById("X");
   check[1] = document.getElementById("Y");
