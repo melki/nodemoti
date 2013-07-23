@@ -3,7 +3,7 @@
  * Module dependencies.
  */
 
-var sessionActual, on_off="off";
+var sessionActual, setActual, on_off="off";
 var express = require('express')
   , routes = require('./app/controllers')
   , user = require('./app/controllers/user')
@@ -40,6 +40,7 @@ var mongoose = require( 'mongoose' );
 var motiModel = mongoose.model('moti');
 var nbSessionsModel = mongoose.model('nbSessions');
 var setDataModel = mongoose.model('setData');
+var setModel = mongoose.model('set');
 
 
 app.get('/', routes.index);
@@ -67,25 +68,52 @@ io.sockets.on('connection', function (socket) {
   
   socket.on('machine', function (data)
   {
-     var nbPoints=0;
+     var newSet = new setModel({});
+     newSet.save(function (err) {
+     if (err) { throw err; }
+      console.log('New set !');
+     });
+     
+    setModel.count( function (err, count) {
+     if (err) { throw err; }
+     setActual = count; 
+     console.log('Set #%d ', count);
      var theDate = new Date(data[0]);
      var theDate2 = new Date(data[1]);
      var action = data[2];
      
-     var session = data[3];
+     var dataSet;
      theDate.setHours(theDate.getHours() + 2);
      theDate2.setHours(theDate2.getHours() + 2);
-      
-     var newSet = new setDataModel({date1 : theDate});
-     newSet.date2 = theDate2;
-     newSet.action = action;
-     newSet.session = session;
-     newSet.save(function (err) {
-       if (err) { throw err; }
-        console.log('dataset succesfully add ! '+ newSet);
+     
+     motiModel.find({date : {$gte: theDate, $lte: theDate2}}).exec  (function ( err ,result)
+
+      {   
+        dataSet = result;
+      for (var j = 0; j < dataSet.length; j++) {
+        var newDataSet = new setDataModel({idSet : setActual});
+        newDataSet.action = action;
+        newDataSet.x = dataSet[j].x;
+        newDataSet.y = dataSet[j].y;
+        newDataSet.z = dataSet[j].z;
+        newDataSet.pitch = dataSet[j].pitch;
+        newDataSet.yaw = dataSet[j].yaw;
+        newDataSet.roll = dataSet[j].roll;
+        newDataSet.save(function (err) {
+        if (err) { throw err; }
+        console.log('data succesfully add ! '+ newDataSet);
         });
         
 
+      };
+      });
+
+
+   
+
+     });
+
+     
 
           
     
