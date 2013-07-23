@@ -4,7 +4,7 @@
 
 var db        = require('../models/db');
 var mongoose  = require('mongoose');
-var motiModel =  mongoose.model('moti');
+var motiModel = mongoose.model('moti');
 var url       = require("url");
 var fs        = require('fs');
 
