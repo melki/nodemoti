@@ -14,7 +14,7 @@ $(document).ready(function() {
         whatTheUserWant = ['yaw', 'pitch', 'roll'];
         $('#x').text(" Yaw - ");
         $('#y').text(" Pitch - ");
-        $('#z').text(" Roll - "); 
+        $('#z').text(" Roll - ");
         scale = 180;
         drawchart();
         for (var i = 0; i < 3; i++) { check[i].checked = true;}
@@ -29,14 +29,14 @@ $(document).ready(function() {
         data[3]=$("#session").html();
         socket.emit('machine',data);
         points=0;
-       } 
-    }); 
+       }
+    });
 });
 var scale = 600;
 var focus, brush, context, color = ["green","red","blue  ","#b0d02e", "#e94366", "#51a5cb","#f08f33","#333333","#777777"];
 
-function drawchart(){                                 
-var margin = {top: 10, right: 10, bottom: 100, left: 40},
+function drawchart(){
+var margin = {top: 20, right: 10, bottom: 100, left: 40},
     margin2 = {top: 430, right: 10, bottom: 20, left: 40},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom,
@@ -106,9 +106,9 @@ var dd;
 
 d3.json("../tmp/data.json", function(error, data) {
     dd=data;
-    
+
     data.forEach(function(d) {
-    
+
     d.date = parseDate(d.date);
     d.y = +d.y;
     d.x = +d.x;
@@ -139,7 +139,7 @@ d3.json("../tmp/data.json", function(error, data) {
       });
 
 
-  
+
   focus.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
@@ -178,13 +178,13 @@ d3.json("../tmp/data.json", function(error, data) {
 });
 
  function brush() {
-        points = brush.extent();   
+        points = brush.extent();
         x.domain(brush.empty() ? x2.domain() : brush.extent());
         focus.selectAll("path").attr("d", function (col) { return area(col)(dd); });
         focus.select(".x.axis").call(xAxis);
     }
 
-   } 
+   }
 
    drawchart();
   var check = new Array();
@@ -196,7 +196,7 @@ d3.json("../tmp/data.json", function(error, data) {
 function addChart()
 {
   for (var i = 0; i < 3; i++) {
-  
+
    if(check[i].checked!=true)
   {
      focus.select("path#path_"+whatTheUserWant[i])
