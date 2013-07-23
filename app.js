@@ -69,7 +69,6 @@ var io = require('socket.io').listen(server);
 io.sockets.on('connection', function (socket){
 
 	socket.emit("on_offInfo", on_off );
-	
 
 	socket.on('machine', function (data){
 		var newSet = new setModel({});
@@ -162,7 +161,6 @@ io.sockets.on('connection', function (socket){
 			app.use(express.errorHandler());
 		}
 
-
 		console.log("It begins !")
 
 	});
@@ -199,7 +197,7 @@ io.sockets.on('connection', function (socket){
 		i++;
 
 		serialData.value = data;
-		
+
 		socket.emit('serialEvent', serialData);
 	});
 });
