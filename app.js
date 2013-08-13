@@ -15,8 +15,11 @@ var db      = require('./app/models/db');
 var fs      = require('fs');
 var path    = require('path');
 
-var serialport = require("serialport");       // include the serialport library
-var SerialPort = serialport.SerialPort;      // make a local instance of serial
+// var serialport = require("serialport");       // include the serialport library
+// var SerialPort = serialport.SerialPort;      // make a local instance of serial
+
+var myBtPort = new (require('bluetooth-serial-port')).BluetoothSerialPort();
+var dataBuffer = "";
 
 var i = 0;
 
@@ -35,14 +38,33 @@ app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-var myPort = new SerialPort("/dev/ttyACM0", {
-	baudrate: 115200,
-	parser: serialport.parsers.readline("\r\n")
+// var myPort = new SerialPort("/dev/ttyACM0", {
+// 	baudrate: 115200,
+// 	parser: serialport.parsers.readline("\r\n")
+// });
+
+console.log("Bt connection");
+myBtPort.on('found', function (address, name) {
+	console.log('Found: ' + address + ' with name ' + name);
+
+	myBtPort.findSerialPortChannel(address, function(channel) {
+		console.log('Found RFCOMM channel for serial port on ' + name + ': ' + channel);
+
+		if (name !== 'moti') return;
+
+		console.log('Attempting to connect...');
+
+		myBtPort.connect(address, channel, function(){
+			console.log('Connected. Receiving data...');
+
+		});
+	});
 });
 
+myBtPort.inquire();
 
 
-var mongoose        = require( 'mongoose' );
+var mongoose        = require('mongoose');
 var motiModel       = mongoose.model('moti');
 var nbSessionsModel = mongoose.model('nbSessions');
 var setDataModel    = mongoose.model('setData');
@@ -170,35 +192,50 @@ io.sockets.on('connection', function (socket){
 		console.log("It ends !");
 	});
 
-	myPort.on('data', function (data) {
-		if(i>9 && on_off=="on"){
-			socket_data = JSON.parse(data.replace(/ /g,""));
+	// myPort.on('data', function (data) {
+	// 	if(i>9 && on_off=="on"){
+	// 		socket_data = JSON.parse(data.replace(/ /g,""));
 
-			var newData = new motiModel({
-				x : socket_data.accel.x
-			});
+	// 		var newData = new motiModel({
+	// 			x : socket_data.accel.x
+	// 		});
 
-			newData.session = sessionActual;
-			newData.y       = socket_data.accel.y;
-			newData.z       = socket_data.accel.z;
+	// 		newData.session = sessionActual;
+	// 		newData.y       = socket_data.accel.y;
+	// 		newData.z       = socket_data.accel.z;
 
-			newData.pitch = socket_data.gyro.pitch;
-			newData.yaw   = socket_data.gyro.yaw;
-			newData.roll  = socket_data.gyro.roll;
+	// 		newData.pitch = socket_data.gyro.pitch;
+	// 		newData.yaw   = socket_data.gyro.yaw;
+	// 		newData.roll  = socket_data.gyro.roll;
 
-			newData.save(function (err){
-				if (err){
-					throw err;
-				}
-				console.log('data ajouté avec succès !');
-			});
+	// 		newData.save(function (err){
+	// 			if (err){
+	// 				throw err;
+	// 			}
+	// 			console.log('data ajouté avec succès !');
+	// 		});
+	// 	}
+
+	// 	i++;
+
+	// 	serialData.value = data;
+
+	// 	socket.emit('serialEvent', serialData);
+	// });
+
+	myBtPort.on('data', function(buffer) {
+
+		dataBuffer = dataBuffer + buffer.toString('utf-8');
+
+		if(dataBuffer.indexOf("\n") != -1){
+
+			console.log(dataBuffer);
+
+			serialData.value = dataBuffer;
+
+			socket.emit('serialEvent', serialData);
+
+			dataBuffer = "";
 		}
-
-		i++;
-
-		serialData.value = data;
-
-		socket.emit('serialEvent', serialData);
 	});
 });
-

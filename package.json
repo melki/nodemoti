@@ -11,10 +11,8 @@
     "jade": "0.33.0",
     "engine.io": "0.6.3",
     "serialport": "1.1.1",
+    "bluetooth-serial-port": "1.0.1",
     "socket.io": "0.9.16",
     "mongoose": "3.6.15"
-  },
-  "engines": {
-    "node": "0.10.13"
   }
 }
