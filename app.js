@@ -43,25 +43,30 @@ app.use(express.static(path.join(__dirname, 'public')));
 // 	parser: serialport.parsers.readline("\r\n")
 // });
 
-console.log("Bt connection");
 myBtPort.on('found', function (address, name) {
 	console.log('Found: ' + address + ' with name ' + name);
 
 	myBtPort.findSerialPortChannel(address, function(channel) {
 		console.log('Found RFCOMM channel for serial port on ' + name + ': ' + channel);
 
-		if (name !== 'moti') return;
-
-		console.log('Attempting to connect...');
-
-		myBtPort.connect(address, channel, function(){
-			console.log('Connected. Receiving data...');
-
-		});
+		if (name == 'moti'){
+			console.log('Attempting to connect to moti...');
+	
+			myBtPort.connect(address, channel, function(){
+				console.log('Connected. Receiving data...');
+			});
+		}
+		else return;
+		console.log("Closing port");
+		myBtPort.close();  
 	});
 });
 
 myBtPort.inquire();
+
+
+
+
 
 
 var mongoose        = require('mongoose');
@@ -89,6 +94,7 @@ var server = http.createServer(app).listen(app.get('port'), function(){
 var io = require('socket.io').listen(server);
 
 io.sockets.on('connection', function (socket){
+
 
 	socket.emit("on_offInfo", on_off );
 
