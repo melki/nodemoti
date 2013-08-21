@@ -45,21 +45,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 myBtPort.on('found', function (address, name) {
 	console.log('Found: ' + address + ' with name ' + name);
-
-	myBtPort.findSerialPortChannel(address, function(channel) {
-		console.log('Found RFCOMM channel for serial port on ' + name + ': ' + channel);
-
-		if (name == 'moti'){
+	if (name == 'moti'){
+		myBtPort.findSerialPortChannel(address, function(channel) {
+			console.log('Found RFCOMM channel for serial port on ' + name + ': ' + channel);
+	
 			console.log('Attempting to connect to moti...');
 	
 			myBtPort.connect(address, channel, function(){
 				console.log('Connected. Receiving data...');
 			});
-		}
-		else return;
+		});
 		console.log("Closing port");
 		myBtPort.close();  
-	});
+	}
 });
 
 myBtPort.inquire();
